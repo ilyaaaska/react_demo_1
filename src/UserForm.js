@@ -4,13 +4,13 @@ import ErrorMessage from "./ErrorMessage";
 const UserForm = (props) => {
   const [hasError, setHasError] = useState(false);
   const [userName, setUserName] = useState("");
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState("");
   const submitFormHandler = (event) => {
     event.preventDefault();
-    if (userName.trim() === "" || age === 0) {
+    if (userName.trim() === "" || +age === 0 || age.trim() === "") {
       setHasError(true);
       setUserName("");
-      setAge(0);
+      setAge("");
       return;
     }
     props.addNewUser({
@@ -18,6 +18,8 @@ const UserForm = (props) => {
       age: age,
       id: Math.random() * 100000,
     });
+    setUserName("");
+    setAge("");
   };
   const userNameInputHandler = (event) => {
     setUserName(event.target.value);
