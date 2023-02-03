@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 
-const INITIAL_USERS = [
-  { id: 1, username: "txsmith", age: 31 },
-  { id: 2, username: "bxsmith", age: 22 },
-];
+import AddUser from "./Users/AddUser";
+import UsersList from "./Users/UsersList";
+import Wrapper from "./Wrapper";
 function App() {
-  const [usersList, setUsersList] = useState(INITIAL_USERS);
-  const addNewUserHandler = (newUser) => {
-    setUsersList((prevList) => [...prevList, newUser]);
+  const [usersList, setUsersList] = useState([]);
+
+  const addUserHandler = (uName, uAge) => {
+    setUsersList((prevUsersList) => {
+      return [
+        ...prevUsersList,
+        { name: uName, age: uAge, id: Math.random().toString() },
+      ];
+    });
   };
-  return <div></div>;
+
+  // Wrapper is custom component that should be replaced by <React.Fragment>
+  return (
+    <Wrapper>
+      <AddUser onAddUser={addUserHandler} />
+      <UsersList users={usersList} />
+    </Wrapper>
+  );
 }
 
 export default App;
